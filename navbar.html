@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navbar Bank Jateng</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #0054a6;
+            --secondary-color: #e31837;
+            --text-color: #333;
+            --white: #fff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            padding-top: 120px; /* Untuk memberi jarak dari smartbar */
+        }
+        
+        /* Top Bar */
+        .top-bar {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 8px 0;
+            font-size: 14px;
+        }
+        
+        .top-bar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .top-bar-left a {
+            color: var(--white);
+            text-decoration: none;
+            margin-right: 15px;
+        }
+        
+        .top-bar-right {
+            display: flex;
+            align-items: center;
+        }
+        
+        .search-box {
+            position: relative;
+            margin-right: 20px;
+        }
+        
+        .search-box input {
+            padding: 5px 10px;
+            border-radius: 4px;
+            border: none;
+            width: 200px;
+        }
+        
+        .search-box button {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            cursor: pointer;
+        }
+        
+        .language-selector {
+            display: flex;
+            align-items: center;
+        }
+        
+        .language-selector select {
+            padding: 5px;
+            border-radius: 4px;
+            border: none;
+            margin-left: 5px;
+        }
+        
+        /* Main Navbar */
+        .navbar {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 40px; /* Sesuaikan dengan tinggi smartbar */
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+        
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            height: 80px;
+        }
+        
+        .logo {
+            height: 60px;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-item {
+            position: relative;
+        }
+        
+        .nav-link {
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 10px 15px;
+            font-weight: 600;
+            display: block;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: var(--secondary-color);
+        }
+        
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: var(--white);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 0 0 5px 5px;
+            width: 220px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1001;
+        }
+        
+        .nav-item:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .dropdown-item {
+            padding: 10px 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+        
+        .dropdown-link {
+            color: var(--text-color);
+            text-decoration: none;
+            display: block;
+            transition: all 0.3s ease;
+        }
+        
+        .dropdown-link:hover {
+            color: var(--secondary-color);
+            padding-left: 5px;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--primary-color);
+            cursor: pointer;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .nav-menu {
+                position: fixed;
+                top: 120px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 120px);
+                background-color: var(--white);
+                flex-direction: column;
+                align-items: center;
+                padding-top: 30px;
+                transition: all 0.5s ease;
+            }
+            
+            .nav-menu.active {
+                left: 0;
+            }
+            
+            .nav-item {
+                width: 100%;
+                text-align: center;
+                margin-bottom: 15px;
+            }
+            
+            .dropdown-menu {
+                position: static;
+                width: 100%;
+                opacity: 1;
+                visibility: visible;
+                display: none;
+                box-shadow: none;
+            }
+            
+            .nav-item:hover .dropdown-menu {
+                display: block;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .search-box {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="top-bar-container">
+            <div class="top-bar-left">
+                <a href="#"><i class="fas fa-map-marker-alt"></i> Cabang & ATM</a>
+                <a href="#"><i class="fas fa-phone"></i> Kontak Kami</a>
+                <a href="#"><i class="fas fa-question-circle"></i> Bantuan</a>
+            </div>
+            <div class="top-bar-right">
+                <div class="search-box">
+                    <input type="text" placeholder="Cari...">
+                    <button type="submit"><i class="fas fa-search"></i></button>
+                </div>
+                <div class="language-selector">
+                    <span>ID</span>
+                    <select>
+                        <option>Indonesia</option>
+                        <option>English</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Main Navbar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="#" class="logo">
+                <img src="https://www.bankjateng.co.id/wp-content/uploads/2020/07/logo-bankjateng.png" alt="Bank Jateng" class="logo">
+            </a>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Tentang Kami</a>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-item"><a href="#" class="dropdown-link">Profil Perusahaan</a></li>
+                        <li class="dropdown-item"><a href="#" class="dropdown-link">Visi & Misi</a></li>
+                        <li class="dropdown-item"><a href="#" class="dropdown-link">Manajemen</a></li>
+                        <li class="dropdown-item"><a href="#" class="dropdown-link">Penghargaan</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Produk & Layanan</a>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-item"><a href="#" class="dropdown-link">Tabungan</a></li>
+                        <li class="dropdown-item"><a href="#" class="dropdown-link">Deposito</a></li>
+                        <li class="dropdown-item"><a href="#" class="dropdown-link">Kredit</a></li>
+                        <li class="dropdown-item"><a href="#" class="dropdown-link">Syariah</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Info Terkini</a>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-item"><a href="#" class="dropdown-link">Berita</a></li>
+                        <li class="dropdown-item"><a href="#" class="dropdown-link">Pengumuman</a></li>
+                        <li class="dropdown-item"><a href="#" class="dropdown-link">Event</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Hubungan Investor</a>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-item"><a href="#" class="dropdown-link">Laporan Keuangan</a></li>
+                        <li class="dropdown-item"><a href="#" class="dropdown-link">Informasi Saham</a></li>
+                        <li class="dropdown-item"><a href="#" class="dropdown-link">RUPS</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Karir</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">CSR</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navMenu = document.getElementById('navMenu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.nav-item') && window.innerWidth <= 992) {
+                const dropdowns = document.querySelectorAll('.dropdown-menu');
+                dropdowns.forEach(dropdown => {
+                    dropdown.style.display = 'none';
+                });
+            }
+        });
+        
+        // Toggle dropdown on mobile
+        const navItems = document.querySelectorAll('.nav-item');
+        navItems.forEach(item => {
+            const link = item.querySelector('.nav-link');
+            const dropdown = item.querySelector('.dropdown-menu');
+            
+            if (dropdown) {
+                link.addEventListener('click', (e) => {
+                    if (window.innerWidth <= 992) {
+                        e.preventDefault();
+                        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+                    }
+                });
+            }
+        });
+        
+        // Adjust body padding based on navbar height
+        function adjustBodyPadding() {
+            const navbar = document.querySelector('.navbar');
+            const topBar = document.querySelector('.top-bar');
+            const navbarHeight = navbar.offsetHeight + topBar.offsetHeight;
+            document.body.style.paddingTop = navbarHeight + 'px';
+        }
+        
+        window.addEventListener('load', adjustBodyPadding);
+        window.addEventListener('resize', adjustBodyPadding);
+    </script>
+</body>
+</html>
